@@ -13,8 +13,11 @@ import torch.optim as optim
 from torch.utils.data import DataLoader, Dataset
 
 ############### For TensorBoard ###############
+import torchvision
+import matplotlib.pyplot as plt
+
 from torch.utils.tensorboard import SummaryWriter
-writer = SummaryWriter()
+writer = SummaryWriter('/pytorch/tensors')
 ###############################################
 
 logger = logging.getLogger(__name__)
@@ -73,6 +76,17 @@ def convert_to_tensor(data_dir, images_file, labels_file):
     labels = torch.tensor(labels, dtype=torch.int64)
     return images, labels
 
+# Helper function for inline image display
+def matplotlib_imshow(img, one_channel=False):
+    if one_channel:
+        img = img.mean(dim=0)
+    img = img / 2 + 0.5     # unnormalize
+    npimg = img.numpy()
+    if one_channel:
+        plt.imshow(npimg, cmap="Greys")
+    else:
+        plt.imshow(np.transpose(npimg, (1, 2, 0)))
+
 
 class MNIST(Dataset):
     def __init__(self, data_dir, train=True):
@@ -107,6 +121,27 @@ def train(args):
     test_loader = DataLoader(
         MNIST(args.test, train=False), batch_size=args.test_batch_size, shuffle=False
     )
+    
+    ################## TensorBoard ##################
+    # Extract a batch of 4 images
+    dataiter = iter(train_loader)
+    images, labels = dataiter.next()
+
+    # Create a grid from the images and show them
+    img_grid = torchvision.utils.make_grid(images)
+    matplotlib_imshow(img_grid, one_channel=True)
+    
+    # Default log_dir argument is "runs" - but it's good to be specific
+    # torch.utils.tensorboard.SummaryWriter is imported above
+
+    # Write image data to TensorBoard log dir
+    writer.add_image('Four Fashion-MNIST Images', img_grid)
+    writer.flush()
+
+    # To view, start TensorBoard on the command line with:
+    #   tensorboard --logdir=runs
+    # ...and open a browser tab to http://localhost:6006/
+    #################################################
 
     net = Net().to(device)
     loss_fn = nn.CrossEntropyLoss()
@@ -121,7 +156,7 @@ def train(args):
             imgs, labels = imgs.to(device), labels.to(device)
             output = net(imgs)
             loss = loss_fn(output, labels)
-
+            
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
@@ -136,7 +171,11 @@ def train(args):
                         loss.item(),
                     )
                 )
-
+            ################## TensorBoard ##################
+            writer.add_scalar("Loss/train", loss, epoch)
+            writer.flush()
+            ################## TensorBoard ##################
+                
         # test the model
         test(net, test_loader, device)
 
@@ -247,3 +286,6 @@ def parse_args():
 if __name__ == "__main__":
     args = parse_args()
     train(args)
+    
+#     import time
+#     time.sleep(60*60)

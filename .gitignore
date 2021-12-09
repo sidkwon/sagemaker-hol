@@ -1,2 +1,3 @@
-01.tensorboard/tensorflow/data/
-01.tensorboard/pytorch/data
+01.tensorboard/**/data/
+01.tensorboard/**/.ipynb_checkpoints/
+01.tensorboard/pytorch/profiler/
