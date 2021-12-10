@@ -4,3 +4,5 @@
 02.debugger/.ipynb_checkpoints/
 02.debugger/data
 02.debugger/profiler*
+03.pipelines/data
+03.pipelines/train_model/.ipynb_checkpoints/
