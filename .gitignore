@@ -1,3 +1,6 @@
 01.tensorboard/**/data/
 01.tensorboard/**/.ipynb_checkpoints/
 01.tensorboard/pytorch/profiler/
+02.debugger/.ipynb_checkpoints/
+02.debugger/data
+02.debugger/profiler*
