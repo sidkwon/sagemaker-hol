@@ -2,12 +2,12 @@ import argparse, os
 import numpy as np
 
 import tensorflow as tf
-import keras
-from keras import backend as K
-from keras.models import Sequential
-from keras.layers import Dense, Dropout, Activation, Flatten, BatchNormalization, Conv2D, MaxPooling2D
-from keras.optimizers import SGD
-from keras.utils import multi_gpu_model
+from tensorflow import keras
+from tensorflow.keras import backend as K
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, Dropout, Activation, Flatten, BatchNormalization, Conv2D, MaxPooling2D
+from tensorflow.keras.optimizers import SGD
+from tensorflow.keras.utils import multi_gpu_model
 
 if __name__ == '__main__':
         
