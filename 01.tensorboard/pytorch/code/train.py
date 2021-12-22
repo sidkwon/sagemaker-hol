@@ -135,7 +135,7 @@ def train(args):
     # torch.utils.tensorboard.SummaryWriter is imported above
 
     # Write image data to TensorBoard log dir
-    writer.add_image('Four Fashion-MNIST Images', img_grid)
+    writer.add_image('Fashion-MNIST Images', img_grid)
     writer.flush()
 
     # To view, start TensorBoard on the command line with:
