@@ -29,8 +29,8 @@ def parse_args():
     
 def get_train_data(train_dir):
     
-    x_train = np.load(os.path.join(train_dir, 'data_train_x.npy'))
-    y_train = np.load(os.path.join(train_dir, 'data_train_y.npy'))
+    x_train = np.load(os.path.join(train_dir, 'data_train_x.npy'), allow_pickle=True)
+    y_train = np.load(os.path.join(train_dir, 'data_train_y.npy'), allow_pickle=True)
     print('x_train', x_train.shape,'y_train', y_train.shape)
 
     return x_train, y_train
@@ -38,8 +38,8 @@ def get_train_data(train_dir):
 
 def get_validation_data(validation_dir):
     
-    x_validation = np.load(os.path.join(validation_dir, 'data_val_x.npy'))
-    y_validation = np.load(os.path.join(validation_dir, 'data_val_y.npy'))
+    x_validation = np.load(os.path.join(validation_dir, 'data_val_x.npy'), allow_pickle=True)
+    y_validation = np.load(os.path.join(validation_dir, 'data_val_y.npy'), allow_pickle=True)
     print('x_validation', x_validation.shape,'y_validation', y_validation.shape)
 
     return x_validation, y_validation
@@ -59,18 +59,18 @@ if __name__ == "__main__":
 
     with tf.device(device):
         model = tf.keras.Sequential([
-            # input layer
-            tf.keras.layers.Dense(30, input_shape=(30,), activation='relu'),
-            tf.keras.layers.Dense(15, activation='relu'),
-            tf.keras.layers.Dense(10,activation = 'relu'),
-            # we use sigmoid for binary output
-            # output layer
-            tf.keras.layers.Dense(1, activation='sigmoid')
+                # input layer
+                tf.keras.layers.Dense(30, input_shape=(30,), activation='relu'),
+                tf.keras.layers.Dense(15, activation='relu'),
+                tf.keras.layers.Dense(10,activation = 'relu'),
+                # we use sigmoid for binary output
+                # output layer
+                tf.keras.layers.Dense(1, activation='sigmoid')
             ]
         )
 
         model.summary()
-#         optimizer = tf.keras.optimizers.SGD(learning_rate)
+        
         model.compile(optimizer='adam',
                       loss='binary_crossentropy',
                       metrics=['accuracy', 'mse'])    

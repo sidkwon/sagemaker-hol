@@ -11,7 +11,8 @@ def input_handler(data, context):
     if context.request_content_type == 'text/csv':
         request = data.read().decode('utf-8').rstrip('\n')
         request = [float(x) for x in request.split(',')]
-        request.pop(0) # Remove "ID" column
+        request.pop(0) # Remove "id" column
+        request.pop(1) # Remove "diagnosis" column
         
         return json.dumps({
             'instances': [request]
