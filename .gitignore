@@ -11,3 +11,5 @@
 04.batch_transform/xgboost/source_dir/.ipynb_checkpoints/
 04.batch_transform/xgboost/.ipynb_checkpoints/xgboost_batch_transform-checkpoint.ipynb
 06.processing/01.sm-processing-w-boto3/data/
+06.processing/02.sm-processing-byoc-w-pipelines/data/
+07.automl
